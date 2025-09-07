@@ -1,0 +1,105 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    bytecblock "passenger" "none" "destination"
+    txn ApplicationID
+    bnz main_after_if_else@2
+    // smart_contracts/hello_world/contract.algo.ts:4
+    // passenger = GlobalState<string>({ key: "passenger", initialValue: "none" })
+    bytec_0 // "passenger"
+    bytec_1 // "none"
+    app_global_put
+    // smart_contracts/hello_world/contract.algo.ts:5
+    // destination = GlobalState<string>({ key: "destination", initialValue: "none" })
+    bytec_2 // "destination"
+    bytec_1 // "none"
+    app_global_put
+
+main_after_if_else@2:
+    // smart_contracts/hello_world/contract.algo.ts:3
+    // export class TicketBooking extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@8
+    pushbytes 0xaa42d6ac // method "book(string,string)string"
+    txna ApplicationArgs 0
+    match main_book_route@5
+
+main_after_if_else@12:
+    // smart_contracts/hello_world/contract.algo.ts:3
+    // export class TicketBooking extends Contract {
+    pushint 0 // 0
+    return
+
+main_book_route@5:
+    // smart_contracts/hello_world/contract.algo.ts:7
+    // book(name: string, place: string): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/hello_world/contract.algo.ts:3
+    // export class TicketBooking extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    // smart_contracts/hello_world/contract.algo.ts:7
+    // book(name: string, place: string): string {
+    callsub book
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    pushbytes 0x151f7c75
+    swap
+    concat
+    log
+    pushint 1 // 1
+    return
+
+main_bare_routing@8:
+    // smart_contracts/hello_world/contract.algo.ts:3
+    // export class TicketBooking extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@12
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    pushint 1 // 1
+    return
+
+
+// smart_contracts/hello_world/contract.algo.ts::TicketBooking.book(name: bytes, place: bytes) -> bytes:
+book:
+    // smart_contracts/hello_world/contract.algo.ts:7
+    // book(name: string, place: string): string {
+    proto 2 1
+    // smart_contracts/hello_world/contract.algo.ts:4
+    // passenger = GlobalState<string>({ key: "passenger", initialValue: "none" })
+    bytec_0 // "passenger"
+    // smart_contracts/hello_world/contract.algo.ts:8
+    // this.passenger.value = name
+    frame_dig -2
+    app_global_put
+    // smart_contracts/hello_world/contract.algo.ts:5
+    // destination = GlobalState<string>({ key: "destination", initialValue: "none" })
+    bytec_2 // "destination"
+    // smart_contracts/hello_world/contract.algo.ts:9
+    // this.destination.value = place
+    frame_dig -1
+    app_global_put
+    // smart_contracts/hello_world/contract.algo.ts:10
+    // return "Ticket booked for " + name + " to " + place
+    pushbytes "Ticket booked for "
+    frame_dig -2
+    concat
+    pushbytes " to "
+    concat
+    frame_dig -1
+    concat
+    retsub

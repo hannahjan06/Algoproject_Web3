@@ -1,22 +1,42 @@
-# algorandweb3
+# Ticket Booking dApp
 
-Welcome to your new AlgoKit project!
+## Project Description
 
-This is your workspace root. A `workspace` in AlgoKit is an orchestrated collection of standalone projects (backends, smart contracts, frontend apps and etc).
+My dApp is a **XXX** built on **Algorand**.
+It’s a simple smart contract demo that shows how decentralized apps can handle booking operations on the Algorand blockchain. The goal is to help beginners understand how Algorand smart contracts work with an easy, hands-on example.
 
-By default, `projects_root_path` parameter is set to `projects`. Which instructs AlgoKit CLI to create a new directory under `projects` directory when new project is instantiated via `algokit init` at the root of the workspace.
+## What it does
 
-## Getting Started
+This dApp allows a user to “book a ticket” by entering their name and destination.
+Once booked, the data is stored in the Algorand blockchain’s global state, showcasing how stateful smart contracts can be used in real applications.
 
-To get started refer to `README.md` files in respective sub-projects in the `projects` directory.
+## Features
 
-To learn more about algokit, visit [documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/algokit.md).
+* 📌 Beginner-friendly contract structure written in TypeScript
+* 🧑‍🤝‍🧑 Stores passenger name in the global state
+* 🗺️ Stores destination in the global state
+* 🎟️ Function to “book” a ticket by updating both passenger and destination
+* ⚡ Built on Algorand for speed, security, and low fees
 
-### GitHub Codespaces
+## Deployed Smart Contract Link
 
-To get started execute:
+👉 [XXX](XXX)
 
-1. `algokit generate devcontainer` - invoking this command from the root of this repository will create a `devcontainer.json` file with all the configuration needed to run this project in a GitHub codespace. [Run the repository inside a codespace](https://docs.github.com/en/codespaces/getting-started/quickstart) to get started.
-2. `algokit init` - invoke this command inside a github codespace to launch an interactive wizard to guide you through the process of creating a new AlgoKit project
+## Smart Contract Code
 
-Powered by [Copier templates](https://copier.readthedocs.io/en/stable/).
+```typescript
+import { Contract, GlobalState } from '@algorandfoundation/algorand-typescript'
+
+export class TicketBooking extends Contract {
+  passenger = GlobalState<string>({ key: "passenger", initialValue: "none" })
+  destination = GlobalState<string>({ key: "destination", initialValue: "none" })
+
+  book(name: string, place: string): string {
+    this.passenger.value = name
+    this.destination.value = place
+    return "Ticket booked for " + name + " to " + place
+  }
+}
+```
+
+---
