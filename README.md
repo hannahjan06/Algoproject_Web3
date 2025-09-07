@@ -20,7 +20,9 @@ Once booked, the data is stored in the Algorand blockchain’s global state, sho
 
 ## Deployed Smart Contract Link
 
-👉 [XXX](XXX)
+https://lora.algokit.io/testnet/application/745517167
+![WhatsApp Image 2025-09-07 at 23 01 36_8969b182](https://github.com/user-attachments/assets/238cde74-6fba-4b5d-8a87-6e218281f21f)
+
 
 ## Smart Contract Code
 
